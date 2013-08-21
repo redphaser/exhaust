@@ -1,19 +1,24 @@
 #!/usr/bin/env python
 
 import pyrax
+import sys
 from prettytable import PrettyTable
 
 pyrax.set_setting("identity_type", "rackspace")
 
-pyrax.set_credential_file("/home/redphaser/cred.exhaust")
+if (len(sys.argv) == 1):
+    pyrax.set_credential_file("/home/redphaser/cred.exhaust")
+elif (len(sys.argv) == 3):
+    pyrax.set_credentials(sys.argv[1], sys.argv[2])
+else:
+    print "Usage: list.exhaust <username> <api key>"
+    sys.exit(0)
 
 CS_DFW = pyrax.connect_to_cloudservers(region="DFW")
 CS_ORD = pyrax.connect_to_cloudservers(region="ORD")
 CS_IAD = pyrax.connect_to_cloudservers(region="IAD")
 
 regions = [CS_DFW, CS_ORD, CS_IAD]
-
-print "Generating Server List...\n"
 
 for i in regions:
     servers_dfw = CS_DFW.list()
