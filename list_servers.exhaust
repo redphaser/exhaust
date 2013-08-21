@@ -22,12 +22,17 @@ servers_iad = CS_IAD.list()
 
 server_table = PrettyTable(["Region", "UUID", "Name", "IPv4"])
 server_table.align["IPv4"] = "l"
+server_table.align["Name"] = "l"
 
 for i in servers_dfw:
     server_table.add_row(["DFW", i.id, i.name, i.accessIPv4])
 
+server_table.add_row(["", "", "", ""])
+
 for i in servers_ord:
     server_table.add_row(["ORD", i.id, i.name, i.accessIPv4])
+
+server_table.add_row(["", "", "", ""])
 
 for i in servers_iad:
     server_table.add_row(["IAD", i.id, i.name, i.accessIPv4])
