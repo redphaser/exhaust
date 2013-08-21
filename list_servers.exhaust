@@ -16,12 +16,9 @@ CS_DFW = pyrax.connect_to_cloudservers(region="DFW")
 CS_ORD = pyrax.connect_to_cloudservers(region="ORD")
 CS_IAD = pyrax.connect_to_cloudservers(region="IAD")
 
-regions = [CS_DFW, CS_ORD, CS_IAD]
-
-for i in regions:
-    servers_dfw = CS_DFW.list()
-    servers_ord = CS_ORD.list()
-    servers_iad = CS_IAD.list()
+servers_dfw = CS_DFW.list()
+servers_ord = CS_ORD.list()
+servers_iad = CS_IAD.list()
 
 server_table = PrettyTable(["Region", "UUID", "Name", "IPv4"])
 server_table.align["IPv4"] = "l"
