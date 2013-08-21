@@ -5,7 +5,7 @@ from prettytable import PrettyTable
 
 pyrax.set_setting("identity_type", "rackspace")
 
-pyrax.set_credential_file("/home/redphaser/dev/exhaust/cred.exhaust")
+pyrax.set_credential_file("/home/redphaser/cred.exhaust")
 
 CS_DFW = pyrax.connect_to_cloudservers(region="DFW")
 CS_ORD = pyrax.connect_to_cloudservers(region="ORD")
