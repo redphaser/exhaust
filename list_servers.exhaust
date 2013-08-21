@@ -6,8 +6,6 @@ from prettytable import PrettyTable
 
 pyrax.set_setting("identity_type", "rackspace")
 
-if (len(sys.argv) == 1):
-    pyrax.set_credential_file("/home/redphaser/cred.exhaust")
 elif (len(sys.argv) == 3):
     pyrax.set_credentials(sys.argv[1], sys.argv[2])
 else:
@@ -25,37 +23,16 @@ for i in regions:
     servers_ord = CS_ORD.list()
     servers_iad = CS_IAD.list()
 
-dfw_table = PrettyTable(["UUID", "Name", "IPv4"])
-dfw_table.align["IPv4"] = "l"
-
-ord_table = PrettyTable(["UUID", "Name", "IPv4"])
-ord_table.align["IPv4"] = "l"
-
-iad_table = PrettyTable(["UUID", "Name", "IPv4"])
-iad_table.align["IPv4"] = "l"
+server_table = PrettyTable(["Region", "UUID", "Name", "IPv4"])
+server_table.align["IPv4"] = "l"
 
 for i in servers_dfw:
-    dfw_table.add_row([i.id, i.name, i.accessIPv4])
+    server_table.add_row(["DFW", i.id, i.name, i.accessIPv4])
 
 for i in servers_ord:
-    ord_table.add_row([i.id, i.name, i.accessIPv4])
+    server_table.add_row(["ORD", i.id, i.name, i.accessIPv4])
 
 for i in servers_iad:
-    iad_table.add_row([i.id, i.name, i.accessIPv4])
+    server_table.add_row(["IAD", i.id, i.name, i.accessIPv4])
 
-if (len(servers_dfw) > 0):
-    print "+----------+"
-    print "|   DFW    |"
-    print dfw_table
-    print ""
-
-if (len(servers_ord) > 0):
-    print "+----------+"
-    print "|   ORD    |"
-    print ord_table
-    print ""
-
-if (len(servers_iad) > 0):
-    print "+----------+"
-    print "|   IAD    |"
-    print iad_table
+print server_table
