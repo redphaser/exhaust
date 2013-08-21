@@ -1,0 +1,56 @@
+#!/usr/bin/env python
+
+import pyrax
+from prettytable import PrettyTable
+
+pyrax.set_setting("identity_type", "rackspace")
+
+pyrax.set_credential_file("/home/redphaser/dev/exhaust/cred.exhaust")
+
+CS_DFW = pyrax.connect_to_cloudservers(region="DFW")
+CS_ORD = pyrax.connect_to_cloudservers(region="ORD")
+CS_IAD = pyrax.connect_to_cloudservers(region="IAD")
+
+regions = [CS_DFW, CS_ORD, CS_IAD]
+
+print "Generating Server List...\n"
+
+for i in regions:
+    servers_dfw = CS_DFW.list()
+    servers_ord = CS_ORD.list()
+    servers_iad = CS_IAD.list()
+
+dfw_table = PrettyTable(["UUID", "Name", "IPv4"])
+dfw_table.align["IPv4"] = "l"
+
+ord_table = PrettyTable(["UUID", "Name", "IPv4"])
+ord_table.align["IPv4"] = "l"
+
+iad_table = PrettyTable(["UUID", "Name", "IPv4"])
+iad_table.align["IPv4"] = "l"
+
+for i in servers_dfw:
+    dfw_table.add_row([i.id, i.name, i.accessIPv4])
+
+for i in servers_ord:
+    ord_table.add_row([i.id, i.name, i.accessIPv4])
+
+for i in servers_iad:
+    iad_table.add_row([i.id, i.name, i.accessIPv4])
+
+if (len(servers_dfw) > 0):
+    print "+----------+"
+    print "|   DFW    |"
+    print dfw_table
+    print ""
+
+if (len(servers_ord) > 0):
+    print "+----------+"
+    print "|   ORD    |"
+    print ord_table
+    print ""
+
+if (len(servers_iad) > 0):
+    print "+----------+"
+    print "|   IAD    |"
+    print iad_table
